@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import os
 from hash import generateHash
 from time import time
-# import BlockChain class
+
 from blockchain import Block, BlockChain
 
 STATIC_DIR = os.path.abspath('static')
@@ -10,7 +10,6 @@ STATIC_DIR = os.path.abspath('static')
 app = Flask(__name__, static_folder=STATIC_DIR)
 app.use_static_for_root = True
 
-# Create a new bloackchain named chain
 chain = BlockChain()
 
 @app.route("/", methods= ["GET", "POST"])
@@ -40,23 +39,24 @@ def home():
                 "amount": amount
             }
         
-
+        
         blockData = {
-                'index': 1,
+                 # Pass length of the chain as index of the block
+                'index': len(chain.chain),
                 'timestamp': time(),
                 'transaction': transaction,
                 'previousHash': "No Previous Hash Present. Since this is the first block.",
         }
-        # Cretae newBlock using Block class
+        
         newBlock = Block(
                         blockData["index"], 
                         blockData["timestamp"], 
                         blockData["transaction"],
                         blockData["previousHash"])
         
-        # Use chain.addBlock() to add newBlock to the chain
+        
         chain.addBlock(newBlock)
-    # Pass chain.chain in blockData and length of the chain in len    
+    
     return render_template('index.html', originalData=originalData, blockData = chain.chain, len=len(chain.chain))
     
 if __name__ == '__main__':
