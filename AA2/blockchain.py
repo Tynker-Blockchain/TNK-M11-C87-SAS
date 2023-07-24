@@ -23,6 +23,7 @@ class BlockChain:
     def addBlock(self, newBlock):
         if(len(self.chain) == 0):
             self.createGenesisBlock()
+            newBlock.index = 1
         newBlock.previousHash = self.chain[-1].currentHash
         newBlock.currentHash = newBlock.calculateHash()
         self.chain.append(newBlock)
