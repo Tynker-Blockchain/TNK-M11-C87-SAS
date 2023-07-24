@@ -40,7 +40,7 @@ def home():
         
 
         blockData = {
-                'index': 1,
+                'index': len(chain.chain),
                 'timestamp': time(),
                 'transaction': transaction,
                 'previousHash': "No Previous Hash Present. Since this is the first block.",
